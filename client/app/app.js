@@ -7,6 +7,7 @@ angular.module('devApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngAudio',
   'btford.socket-io',
   'ui.router',
   'validation.match'

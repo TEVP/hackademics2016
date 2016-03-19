@@ -4,6 +4,13 @@
   <img
     ng-if="$ctrl.questions[$ctrl.step].pictureUrl"
     ng-src="{{$ctrl.questions[$ctrl.step].pictureUrl}}" />
+
+  <button
+    class="btn btn-default"
+    ng-if="$ctrl.questions[$ctrl.step].soundUrl"
+    ng-click="$ctrl.playSound($ctrl.questions[$ctrl.step].soundUrl)">
+    Play
+  </button>
 </div>
 <div class="answer-list">
   <div

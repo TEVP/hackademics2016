@@ -2,9 +2,10 @@
 (function(){
 
 class PracticeComponent {
-  constructor(Question) {
+  constructor(Question, ngAudio) {
     this.message = 'Hello';
     this.Question = Question;
+    this.ngAudio = ngAudio;
   }
 
   $onInit() {
@@ -20,6 +21,14 @@ class PracticeComponent {
     }
 
     this.step += 1;
+
+    if (this.audio) {
+      this.audio.stop();
+    }
+  }
+
+  playSound(url) {
+    this.audio = this.ngAudio.play(url);
   }
 }
 
