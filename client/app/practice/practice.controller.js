@@ -52,6 +52,14 @@ class PracticeComponent {
     }
   }
 
+  getAverageResponseTime() {
+    let averageTime = this.result.reduce(function(sum, result) {
+      sum += result.responseTime;
+      return sum;
+    }, 0)/this.questions.length;
+    return Math.round(averageTime/1000*100)/100;
+  }
+
   playAgain() {
     this.prepareQuestions();
     this.reset();

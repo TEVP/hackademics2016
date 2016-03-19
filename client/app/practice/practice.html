@@ -25,8 +25,11 @@
 </div>
 
 <div class="result padding" ng-if="$ctrl.step === $ctrl.questions.length">
-  <p>Congratulation! You got a score of
-  {{($ctrl.result | filter:{result:true}).length}}.</p>
+  <p class="text-center">
+    Congratulation! You got a score of
+    {{($ctrl.result | filter:{result:true}).length}}/{{$ctrl.questions.length}}.<br>
+    Your average response time: {{$ctrl.getAverageResponseTime()}} (sec/question)
+  </p>
 
   <button
     class="btn btn-block btn-primary"
