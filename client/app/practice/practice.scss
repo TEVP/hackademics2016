@@ -2,7 +2,7 @@
 * @Author: Thinh Pham
 * @Date:   2016-03-19 13:42:24
 * @Last Modified by:   Thinh Pham
-* @Last Modified time: 2016-03-19 15:02:13
+* @Last Modified time: 2016-03-19 16:03:08
 */
 
 practice {
@@ -24,11 +24,18 @@ practice {
     @include flex-direction(column);
     @include justify-content(center);
     @include align-items(center);
-    padding: 10px;
 
-    .text {
-      margin-bottom: 20px;
+    img {
+      max-width: 100%;
     }
+  }
+
+  .result {
+    @include flex(1);
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+    @include flex-direction(column);
   }
 
   .answer-list {

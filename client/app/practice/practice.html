@@ -1,6 +1,9 @@
-<div class="score">{{$ctrl.result}}/{{$ctrl.questions.length}}</div>
-<div class="question">
-  <span class="text">{{ $ctrl.questions[$ctrl.step].question }}</span>
+<div class="score">
+  Score: {{($ctrl.result | filter:{result:true}).length}}
+  ({{$ctrl.step}}/{{$ctrl.questions.length}})
+</div>
+<div class="question padding" ng-if="$ctrl.questions[$ctrl.step]">
+  <p>{{ $ctrl.questions[$ctrl.step].question }}</p>
   <img
     ng-if="$ctrl.questions[$ctrl.step].pictureUrl"
     ng-src="{{$ctrl.questions[$ctrl.step].pictureUrl}}" />
@@ -12,11 +15,23 @@
     Play
   </button>
 </div>
-<div class="answer-list">
+<div class="answer-list" ng-if="$ctrl.questions[$ctrl.step]">
   <div
     class="answer-list-item"
     ng-repeat="(answerId, answer) in $ctrl.questions[$ctrl.step].answers"
     ng-click="$ctrl.submitAnswer(answerId)">
     {{answer}}
   </div>
+</div>
+
+<div class="result padding" ng-if="$ctrl.step === $ctrl.questions.length">
+  <p>Congratulation! You got a score of
+  {{($ctrl.result | filter:{result:true}).length}}.</p>
+
+  <button
+    class="btn btn-block btn-primary"
+    ng-click="$ctrl.playAgain()">Play again</button>
+  <button
+    class="btn btn-block btn-default"
+    ng-click="$root.navigateTo('main')">Back</button>
 </div>

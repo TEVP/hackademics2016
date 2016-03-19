@@ -9,22 +9,52 @@ class PracticeComponent {
   }
 
   $onInit() {
-    this.questions = this.Question.query();
+    this.prepareQuestions();
+    this.reset();
+  }
+
+  prepareQuestions() {
+    this.questions = this.Question.getPractice();
+  }
+
+  reset() {
     this.step = 0;
-    this.result = 0;
+    this.result = [];
+    this.questionBeginTime = new Date().getTime();
   }
 
   submitAnswer(answerId) {
-    this.question = this.questions[this.step];
-    if (answerId === this.question.correctAnswer) {
-      this.result += 1;
+    let question = this.questions[this.step];
+    let responseTime = new Date().getTime() - this.questionBeginTime;
+    if (answerId === question.correctAnswer) {
+      this.result.push({
+        question: question._id,
+        category: question.category,
+        time: new Date(),
+        result: true,
+        responseTime: responseTime
+      });
+    } else {
+      this.result.push({
+        question: question._id,
+        category: question.category,
+        time: new Date(),
+        result: false,
+        responseTime: responseTime
+      });
     }
 
     this.step += 1;
+    this.questionBeginTime = new Date().getTime();
 
     if (this.audio) {
       this.audio.stop();
     }
+  }
+
+  playAgain() {
+    this.prepareQuestions();
+    this.reset();
   }
 
   playSound(url) {

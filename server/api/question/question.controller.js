@@ -66,6 +66,13 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
+export function getPracticeQuestions(req, res) {
+  return Question.find().exec()
+    .then(function(entity) {
+      res.status(200).json(_.take(_.shuffle(entity), 7));
+    });
+}
+
 // Gets a single Question from the DB
 export function show(req, res) {
   return Question.findById(req.params.id).exec()
