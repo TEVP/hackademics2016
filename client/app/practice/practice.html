@@ -1,8 +1,15 @@
+<div class="score">{{$ctrl.result}}/{{$ctrl.questions.length}}</div>
 <div class="question">
-  {{ $ctrl.questions[$ctrl.step].question }}
+  <span class="text">{{ $ctrl.questions[$ctrl.step].question }}</span>
+  <img
+    ng-if="$ctrl.questions[$ctrl.step].pictureUrl"
+    ng-src="{{$ctrl.questions[$ctrl.step].pictureUrl}}" />
 </div>
-<div class="answers">
-  <div ng-repeat="answer in $ctrl.questions[$ctrl.step].answers">
+<div class="answer-list">
+  <div
+    class="answer-list-item"
+    ng-repeat="(answerId, answer) in $ctrl.questions[$ctrl.step].answers"
+    ng-click="$ctrl.submitAnswer(answerId)">
     {{answer}}
   </div>
 </div>

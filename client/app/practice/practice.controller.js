@@ -10,6 +10,16 @@ class PracticeComponent {
   $onInit() {
     this.questions = this.Question.query();
     this.step = 0;
+    this.result = 0;
+  }
+
+  submitAnswer(answerId) {
+    this.question = this.questions[this.step];
+    if (answerId === this.question.correctAnswer) {
+      this.result += 1;
+    }
+
+    this.step += 1;
   }
 }
 

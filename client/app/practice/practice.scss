@@ -2,10 +2,52 @@
 * @Author: Thinh Pham
 * @Date:   2016-03-19 13:42:24
 * @Last Modified by:   Thinh Pham
-* @Last Modified time: 2016-03-19 14:28:40
+* @Last Modified time: 2016-03-19 15:02:13
 */
 
 practice {
   @include display(flex);
+  @include flex-direction(column);
   height: 100%;
+
+  .score {
+    padding: 10px;
+    background-color: #283593;
+    color: #FFF;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .question {
+    @include flex(1);
+    @include display(flex);
+    @include flex-direction(column);
+    @include justify-content(center);
+    @include align-items(center);
+    padding: 10px;
+
+    .text {
+      margin-bottom: 20px;
+    }
+  }
+
+  .answer-list {
+    @include display(flex);
+    @include flex-wrap(wrap);
+
+    &-item {
+      width: 50%;
+      padding: 20px 10px;
+      text-align: center;
+      border: 1px solid #DDD;
+
+      &:nth-child(2n) {
+        border-left: none;
+      }
+
+      &:nth-child(1), &:nth-child(2) {
+        border-bottom: none;
+      }
+    }
+  }
 }
