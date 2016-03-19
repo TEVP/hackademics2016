@@ -3,6 +3,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/font
 @import '../bower_components/bootstrap-social/bootstrap-social.scss';
 $fa-font-path: "../bower_components/font-awesome/fonts";
 @import '../bower_components/font-awesome/scss/font-awesome';
+@import './lib/bourbon/bourbon';
 
 /**
  * App-wide Styles
@@ -18,6 +19,12 @@ html, body {
 
 .padding {
   padding: 10px;
+}
+
+.fill-parent {
+  @include display(flex);
+  width: 100%;
+  height: 100%;
 }
 
 .text-center {
@@ -113,6 +120,7 @@ html, body {
 @import 'lib/bourbon/settings/_prefixer.scss';
 @import 'lib/bourbon/settings/_px-to-em.scss';
 @import 'main/main.scss';
+@import 'oneVsOne/oneVsOne.scss';
 @import 'practice/practice.scss';
 @import '../components/footer/footer.scss';
 @import '../components/oauth-buttons/oauth-buttons.scss';

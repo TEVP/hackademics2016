@@ -8,6 +8,7 @@ angular.module('devApp', [
   'ngResource',
   'ngSanitize',
   'ngAudio',
+  'timer',
   'btford.socket-io',
   'ui.router',
   'validation.match'

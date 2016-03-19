@@ -1,0 +1,49 @@
+<div ng-if="$ctrl.state === 'matching'">
+  <h2>Matching...</h2>
+  <h3 class="text-center"><timer interval="1000">{{mminutes}}:{{sseconds}}</timer></h3>
+</div>
+
+<div ng-if="$ctrl.state === 'playing'" class="fill-parent">
+  <div class="score">
+    Score: {{($ctrl.result | filter:{result:true}).length}}
+    ({{$ctrl.step}}/{{$ctrl.questions.length}})
+  </div>
+
+  <div class="question padding" ng-if="$ctrl.questions[$ctrl.step]">
+    <p>{{ $ctrl.questions[$ctrl.step].question }}</p>
+    <img
+      ng-if="$ctrl.questions[$ctrl.step].pictureUrl"
+      ng-src="{{$ctrl.questions[$ctrl.step].pictureUrl}}" />
+
+    <button
+      class="btn btn-default"
+      ng-if="$ctrl.questions[$ctrl.step].soundUrl"
+      ng-click="$ctrl.playSound($ctrl.questions[$ctrl.step].soundUrl)">
+      Play
+    </button>
+  </div>
+
+  <div class="answer-list" ng-if="$ctrl.questions[$ctrl.step]">
+    <div
+      class="answer-list-item"
+      ng-repeat="(answerId, answer) in $ctrl.questions[$ctrl.step].answers"
+      ng-click="$ctrl.submitAnswer(answerId)">
+      {{answer}}
+    </div>
+  </div>
+
+  <div class="result padding" ng-if="$ctrl.step === $ctrl.questions.length">
+    <p class="text-center">
+      Congratulation! You got a score of
+      {{($ctrl.result | filter:{result:true}).length}}/{{$ctrl.questions.length}}.<br>
+      Your average response time: {{$ctrl.getAverageResponseTime()}} (sec/question)
+    </p>
+
+    <button
+      class="btn btn-block btn-primary"
+      ng-click="$ctrl.playAgain()">Play again</button>
+    <button
+      class="btn btn-block btn-default"
+      ng-click="$root.navigateTo('main')">Back</button>
+  </div>
+</div>
