@@ -16,4 +16,11 @@ angular.module('devApp', [
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
+  })
+  .run(function($rootScope, $state) {
+    $rootScope.navigateTo = navigateTo;
+
+    function navigateTo(state, stateParams) {
+      $state.go(state, stateParams);
+    }
   });

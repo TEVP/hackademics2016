@@ -1,0 +1,8 @@
+<div class="question">
+  {{ $ctrl.questions[$ctrl.step].question }}
+</div>
+<div class="answers">
+  <div ng-repeat="answer in $ctrl.questions[$ctrl.step].answers">
+    {{answer}}
+  </div>
+</div>
