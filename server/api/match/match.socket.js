@@ -11,7 +11,7 @@ var debug = require('debug')('tvep');
 // Model events to emit
 var events = ['save', 'remove'];
 
-var matchingUsers = [];
+var matchingSockets = [];
 
 export function register(socket) {
   // Bind model events to socket events
@@ -24,7 +24,7 @@ export function register(socket) {
   }
 
   socket.on('startMatching', data => {
-    handleStartMatchingEvent(data, socket);
+    handleStartMatchingEvent(socket);
   });
 }
 
@@ -41,17 +41,14 @@ function removeListener(event, listener) {
   };
 }
 
-function handleStartMatchingEvent(data, socket) {
-  debug('%s matching user(s)', matchingUsers.length + 1, data);
-  socket.userId = data.userId;
-  if (matchingUsers.length < 2) {
-    matchingUsers.push({
-      socket: socket
-    });
+function handleStartMatchingEvent(socket) {
+  debug('%s matching user(s)', matchingSockets.length + 1, socket.decoded_token._id);
+  if (matchingSockets.length < 2) {
+    matchingSockets.push(socket);
 
-    if (matchingUsers.length === 2) {
-      var match = new Match(matchingUsers);
-      matchingUsers = [];
+    if (matchingSockets.length === 2) {
+      var match = new Match(matchingSockets);
+      matchingSockets = [];
     }
   }
 }

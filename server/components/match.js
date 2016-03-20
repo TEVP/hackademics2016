@@ -4,12 +4,10 @@ var _ = require('lodash');
 var debug = require('debug')('tvep');
 var Question = require.main.require('./api/question/question.model');
 
-debug('here');
-
 class Match {
-  constructor(users) {
+  constructor(sockets) {
     debug('here');
-    this.users = users;
+    this.sockets = sockets;
 
     this.prepareQuestions().then(questions => {
       this.questions = questions;
@@ -19,9 +17,10 @@ class Match {
     this.answers = {};
     this.scores = {};
 
-    _.forEach(this.users, user => {
-      user.socket.on('answer', data => {
-        this.handleUserAnswer(user, data);
+    _.forEach(this.sockets, socket => {
+      debug('socket token', socket.decoded_token);
+      socket.on('answer', data => {
+        this.handleUserAnswer(socket, data);
       });
     });
   }
@@ -33,8 +32,7 @@ class Match {
       });
   }
 
-  handleUserAnswer(user, data) {
-    let socket = user.socket;
+  handleUserAnswer(socket, data) {
     let questionId = data.questionId;
     let answerId = data.answerId;
     let question = _.find(this.questions, question => {
@@ -45,18 +43,18 @@ class Match {
     if (!this.answers[questionId]) {
       this.answers[questionId] = [];
       this.answers[questionId].push({
-        userId: socket.userId,
+        userId: socket.decoded_token.id,
         result: isCorrect
       });
     } else if (this.answers[questionId].length === 1) {
       let answer = this.answers[questionId];
-      if (answer.userId === socket.userId || answer.result === true) {
+      if (answer.userId === socket.decoded_token._id || answer.result === true) {
         // forbidden
         return;
       } else {
         // both have wrong answers
         this.answers[questionId].push({
-          userId: socket.userId,
+          userId: socket.decoded_token._id,
           result: isCorrect
         });
       }
@@ -65,7 +63,7 @@ class Match {
       return;
     }
 
-    debug('received answer from %s for question %s with answer %s', socket.userId, questionId, answerId);
+    debug('received answer from %s for question %s with answer %s', socket.decoded_token._id, questionId, answerId);
 
     socket.emit('answerResult', {
       result: isCorrect,
@@ -73,7 +71,7 @@ class Match {
     });
 
     if (isCorrect) {
-      this.scores[socket.userId] += 1;
+      this.scores[socket.decoded_token._id] += 1;
       if (_.keys(this.answers).length === this.questions.length) {
         this.nextQuestion();
         this.gameOver();
@@ -88,23 +86,23 @@ class Match {
   }
 
   nextQuestion() {
-    _.each(this.users, user => {
-      user.socket.emit('nextQuestion');
+    _.each(this.sockets, socket => {
+      socket.emit('nextQuestion');
     });
   }
 
   gameOver() {
-    _.each(this.users, user => {
-      user.socket.emit('gameOver', {
+    _.each(this.sockets, socket => {
+      socket.emit('gameOver', {
         scores: this.scores
       });
     });
   }
 
   start() {
-    debug('game start!', this.users[0].socket.userId, this.users[1].socket.userId);
-    _.forEach(this.users, user => {
-      user.socket.emit('startGame', {
+    debug('game start!', this.sockets[0].decoded_token._id, this.sockets[1].decoded_token._id);
+    _.forEach(this.sockets, socket => {
+      socket.emit('startGame', {
         questions: this.questions
       });
     });
