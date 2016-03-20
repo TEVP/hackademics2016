@@ -51,6 +51,11 @@ one-vs-one {
       border: 1px solid #DDD;
       cursor: pointer;
 
+      &.is-chosen {
+        background-color: #283593;
+        color: white;
+      }
+
       &:nth-child(2n) {
         border-left: none;
       }

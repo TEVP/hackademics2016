@@ -58,6 +58,8 @@ class OneVsOneComponent {
       questionId: question._id,
       answerId: answerId
     });
+
+    this.chosenAnswer = answerId;
   }
 
   handleNextQuestion(data) {
@@ -65,6 +67,7 @@ class OneVsOneComponent {
     this.updateScores(scores);
     this.step += 1;
     this.questionBeginTime = new Date().getTime();
+    this.chosenAnswer = null;
 
     if (this.audio) {
       this.audio.stop();
