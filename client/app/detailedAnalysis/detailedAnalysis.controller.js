@@ -118,12 +118,13 @@ class DetailedAnalysisComponent {
       legend: {
         position: 'bottom'
       },
-      backgroundColor: { fill:'transparent' }
+      backgroundColor: { fill:'transparent' },
+      lineWidth: 4
     };
 
     this.chartObject.view = {
       columns: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(index => {
-        if (index === 0) return index;
+        if (index < 2) return index;
         var col = this.chartObject.data.cols[index];
         col.calc = () => {
           return null;

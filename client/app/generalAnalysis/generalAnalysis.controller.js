@@ -98,7 +98,8 @@ class GeneralAnalysisComponent {
       legend: {
         position: 'bottom'
       },
-      backgroundColor: { fill:'transparent' }
+      backgroundColor: { fill:'transparent' },
+      lineWidth: 4
     };
 
     this.chartObject.view = {
