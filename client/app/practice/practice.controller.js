@@ -2,10 +2,12 @@
 (function(){
 
 class PracticeComponent {
-  constructor(Question, ngAudio) {
+  constructor(Question, Answer, User, ngAudio) {
     this.message = 'Hello';
     this.Question = Question;
     this.ngAudio = ngAudio;
+    this.Answer = Answer;
+    this.User = User;
   }
 
   $onInit() {
@@ -26,23 +28,20 @@ class PracticeComponent {
   submitAnswer(answerId) {
     let question = this.questions[this.step];
     let responseTime = new Date().getTime() - this.questionBeginTime;
-    if (answerId === question.correctAnswer) {
-      this.result.push({
-        question: question._id,
-        category: question.category,
-        time: new Date(),
-        result: true,
-        responseTime: responseTime
-      });
-    } else {
-      this.result.push({
-        question: question._id,
-        category: question.category,
-        time: new Date(),
-        result: false,
-        responseTime: responseTime
-      });
-    }
+    var answer = new this.Answer({
+      question: question._id,
+      category: question.category,
+      time: new Date(),
+      responseTime: responseTime
+    });
+    answer.result = answerId === question.correctAnswer;
+
+    this.User.get().$promise.then(user => {
+      answer.user = user._id;
+      answer.$save();
+    });
+
+    this.result.push(answer);
 
     this.step += 1;
     this.questionBeginTime = new Date().getTime();

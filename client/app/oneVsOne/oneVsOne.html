@@ -24,12 +24,13 @@
   </div>
 
   <div class="answer-list" ng-if="$ctrl.questions[$ctrl.step]">
-    <div
+    <a
       class="answer-list-item"
+      href="#"
       ng-repeat="(answerId, answer) in $ctrl.questions[$ctrl.step].answers"
       ng-click="$ctrl.submitAnswer(answerId)">
       {{answer}}
-    </div>
+    </a>
   </div>
 
   <div class="result padding" ng-if="$ctrl.step === $ctrl.questions.length">
