@@ -8,6 +8,25 @@ analysis {
   background: url('/assets/images/bg.png') no-repeat center;
   background-size: cover;
 
+  > p {
+    margin-bottom: 50px;
+    margin-top: -50px;
+  }
+
+  .category {
+    //color: $primary-color;
+  }
+
+  a {
+    color: #FFF;
+  }
+
+  .fa {
+    margin-right: 10px;
+    font-size: 2rem;
+    margin-top: 10px;
+  }
+
   .logo {
     width: 50%;
     max-width: 300px;

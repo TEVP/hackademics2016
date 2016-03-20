@@ -11,6 +11,7 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 
 html, body {
   height: 100%;
+  font-size: 16px;
 }
 
 [ui-view] {
@@ -29,6 +30,16 @@ html, body {
 
 .text-center {
   text-align: center;
+}
+
+.text-light {
+  color: #FFF;
+}
+
+.form-control {
+  height: 42px;
+  @include appearance(none);
+  background: transparent;
 }
 
 .browserupgrade {

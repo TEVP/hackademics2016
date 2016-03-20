@@ -1,0 +1,7 @@
+general-analysis {
+  @include display(flex);
+  @include align-items(center);
+  height: 100%;
+  background: url('/assets/images/daynight.png') no-repeat center;
+  background-size: cover;
+}
