@@ -100,6 +100,10 @@ class GeneralAnalysisComponent {
       },
       backgroundColor: { fill:'transparent' }
     };
+
+    this.chartObject.view = {
+      columns: [0, 1, 2, 3]
+    };
   }
 }
 
