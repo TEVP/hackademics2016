@@ -111,6 +111,7 @@ class DetailedAnalysisComponent {
             count: 10
         }
       },
+      curveType: 'function',
       hAxis: {
         title: 'Date'
       },
