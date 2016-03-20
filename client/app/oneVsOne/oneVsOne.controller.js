@@ -2,9 +2,10 @@
 (function(){
 
 class OneVsOneComponent {
-  constructor(socket, ngAudio, User) {
+  constructor(socket, ngAudio, User, Answer) {
     this.socket = socket.socket;
     this.User = User;
+    this.Answer = Answer;
     this.ngAudio = ngAudio;
     this.answeredQuestions = {};
 
@@ -80,6 +81,8 @@ class OneVsOneComponent {
     };
     this.questionBeginTime = now;
     result.result = data.result;
+    let answer = new this.Answer(result);
+    answer.$save();
 
     this.result.push(result);
   }
