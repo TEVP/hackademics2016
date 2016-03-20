@@ -5,7 +5,8 @@
 
 <div ng-if="$ctrl.state === 'playing'" class="fill-parent">
   <div class="score">
-    Score: {{($ctrl.result | filter:{result:true}).length}}
+    <span>{{$ctrl.users[0].name}}({{$ctrl.users[0].score || 0}})</span> -
+    <span>{{$ctrl.users[1].name}}({{$ctrl.users[1].score || 0}})
     ({{$ctrl.step}}/{{$ctrl.questions.length}})
   </div>
 

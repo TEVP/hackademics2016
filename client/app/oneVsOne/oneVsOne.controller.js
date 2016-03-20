@@ -18,8 +18,12 @@ class OneVsOneComponent {
       this.handleAnswerResult(data);
     });
 
-    this.socket.on('nextQuestion', () => {
-      this.handleNextQuestion();
+    this.socket.on('nextQuestion', data => {
+      this.handleNextQuestion(data);
+    });
+
+    this.socket.on('gameOver', data => {
+      this.handleGameOver(data);
     });
   }
 
@@ -36,6 +40,7 @@ class OneVsOneComponent {
   startGame(data) {
     this.state = 'playing';
     this.questions = data.questions;
+    this.users = data.users;
     this.step = 0;
     this.result = [];
     this.questionBeginTime = new Date().getTime();
@@ -54,13 +59,26 @@ class OneVsOneComponent {
     });
   }
 
-  handleNextQuestion() {
+  handleNextQuestion(data) {
+    let scores = data.scores;
+    this.updateScores(scores);
     this.step += 1;
     this.questionBeginTime = new Date().getTime();
 
     if (this.audio) {
       this.audio.stop();
     }
+  }
+
+  updateScores(scores) {
+    this.users.forEach(user => {
+      user.score = scores[user._id];
+    });
+  }
+
+  handleGameOver(data) {
+    let scores = data.scores;
+    this.updateScores(scores);
   }
 
   matchAgain() {

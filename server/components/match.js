@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var debug = require('debug')('tvep');
 var Question = require.main.require('./api/question/question.model');
+var User = require.main.require('./api/user/user.model');
 
 class Match {
   constructor(sockets) {
@@ -74,13 +75,18 @@ class Match {
     } else {
       if (this.answers[questionId].length === 2) {
         this.nextQuestion();
+        if (_.keys(this.answers).length === this.questions.length) {
+          this.gameOver();
+        }
       }
     }
   }
 
   nextQuestion() {
     _.each(this.sockets, socket => {
-      socket.emit('nextQuestion');
+      socket.emit('nextQuestion', {
+        scores: this.scores
+      });
     });
   }
 
@@ -96,11 +102,33 @@ class Match {
 
   start() {
     debug('game start!', this.sockets[0].decoded_token._id, this.sockets[1].decoded_token._id);
-    _.forEach(this.sockets, socket => {
-      socket.emit('startGame', {
-        questions: this.questions
+
+    var userIds = _.map(this.sockets, socket => {
+      return socket.decoded_token._id;
+    });
+
+    _.each(userIds, id => {
+      this.scores[id] = 0;
+    });
+
+    User.find({
+      _id: {
+        $in: userIds
+      }
+    }).exec().then(users => {
+      _.forEach(this.sockets, socket => {
+        socket.emit('startGame', {
+          questions: this.questions,
+          users: _.map(users, user => {
+            return {
+              _id: user._id,
+              name: user.name
+            }
+          })
+        });
       });
     });
+
 
     _.forEach(this.sockets, socket => {
       debug('socket token', socket.decoded_token);
