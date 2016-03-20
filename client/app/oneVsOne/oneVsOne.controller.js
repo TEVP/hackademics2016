@@ -106,11 +106,19 @@ class OneVsOneComponent {
     let answer = new this.Answer(result);
     answer.$save();
 
-    this.result.push(result);
+    this.result.push(answer);
   }
 
   playSound(url) {
     this.audio = this.ngAudio.play(url);
+  }
+
+  getAverageResponseTime() {
+    let averageTime = this.result.reduce(function(sum, result) {
+      sum += result.responseTime;
+      return sum;
+    }, 0)/this.questions.length;
+    return Math.round(averageTime/1000*100)/100;
   }
 }
 
