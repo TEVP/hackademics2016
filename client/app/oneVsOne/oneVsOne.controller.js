@@ -31,6 +31,7 @@ class OneVsOneComponent {
     this.state = 'matching';
     this.answeredQuestions = {};
     this.User.get().$promise.then(user => {
+      this.me = user;
       this.socket.emit('startMatching', {
         userId: user._id
       });
@@ -79,6 +80,26 @@ class OneVsOneComponent {
   handleGameOver(data) {
     let scores = data.scores;
     this.updateScores(scores);
+  }
+
+  getWinnerName() {
+    var currentUser = this.me;
+    var me, opponent;
+    this.users.forEach(user => {
+      if (!(user._id === currentUser._id)) {
+        opponent = user;
+      } else {
+        me = user;
+      }
+    });
+
+    if (me.score > opponent.score) {
+      return 'you';
+    } else if (me.score < opponent.score) {
+      return opponent.name;
+    } else {
+      return null;
+    }
   }
 
   matchAgain() {

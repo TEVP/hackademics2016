@@ -38,6 +38,8 @@
     <p class="text-center">
       Congratulation! You got a score of
       {{($ctrl.result | filter:{result:true}).length}}/{{$ctrl.questions.length}}.<br>
+      <span ng-if="$ctrl.getWinnerName()">The winner is {{$ctrl.getWinnerName()}}</span>
+      <span ng-if="!$ctrl.getWinnerName()">Draw!</span><br>
       Your average response time: {{$ctrl.getAverageResponseTime()}} (sec/question)
     </p>
 
