@@ -11,7 +11,8 @@ angular.module('devApp', [
   'timer',
   'btford.socket-io',
   'ui.router',
-  'validation.match'
+  'validation.match',
+  'googlechart'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
