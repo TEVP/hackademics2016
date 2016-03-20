@@ -41,6 +41,7 @@ html, body {
 // Component styles are injected through grunt
 // injector
 @import 'admin/admin.scss';
+@import 'lib/_var.scss';
 @import 'lib/bourbon/_bourbon-deprecated-upcoming.scss';
 @import 'lib/bourbon/_bourbon.scss';
 @import 'lib/bourbon/addons/_border-color.scss';

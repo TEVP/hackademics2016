@@ -10,7 +10,7 @@ one-vs-one {
 
   .score {
     padding: 10px;
-    background-color: #283593;
+    background-color: $primary-color;
     color: #FFF;
     text-align: center;
     font-weight: bold;
@@ -52,7 +52,7 @@ one-vs-one {
       cursor: pointer;
 
       &.is-chosen {
-        background-color: #283593;
+        background-color: $primary-color;
         color: white;
       }
 

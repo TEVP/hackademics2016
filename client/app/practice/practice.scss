@@ -2,7 +2,7 @@
 * @Author: Thinh Pham
 * @Date:   2016-03-19 13:42:24
 * @Last Modified by:   Thinh Pham
-* @Last Modified time: 2016-03-19 23:08:35
+* @Last Modified time: 2016-03-20 13:44:34
 */
 
 practice {
@@ -11,8 +11,8 @@ practice {
   height: 100%;
 
   .score {
-    padding: 10px;
-    background-color: #283593;
+    padding: 20px 10px;
+    background-color: $primary-color;
     color: #FFF;
     text-align: center;
     font-weight: bold;
