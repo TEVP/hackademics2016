@@ -35,11 +35,7 @@ class PracticeComponent {
       responseTime: responseTime
     });
     answer.result = answerId === question.correctAnswer;
-
-    this.User.get().$promise.then(user => {
-      answer.user = user._id;
-      answer.$save();
-    });
+    answer.$save();
 
     this.result.push(answer);
 
