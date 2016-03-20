@@ -50,5 +50,12 @@ function handleStartMatchingEvent(socket) {
       var match = new Match(matchingSockets);
       matchingSockets = [];
     }
+
+    socket.on('disconnect', () => {
+      var index = matchingSockets.indexOf(socket);
+      if (index > -1) {
+        matchingSockets.splice(index, 1);
+      }
+    });
   }
 }
