@@ -6,7 +6,6 @@ var Question = require.main.require('./api/question/question.model');
 
 class Match {
   constructor(sockets) {
-    debug('here');
     this.sockets = sockets;
 
     this.prepareQuestions().then(questions => {
@@ -16,13 +15,6 @@ class Match {
 
     this.answers = {};
     this.scores = {};
-
-    _.forEach(this.sockets, socket => {
-      debug('socket token', socket.decoded_token);
-      socket.on('answer', data => {
-        this.handleUserAnswer(socket, data);
-      });
-    });
   }
 
   prepareQuestions() {
@@ -36,6 +28,7 @@ class Match {
     let questionId = data.questionId;
     let answerId = data.answerId;
     let question = _.find(this.questions, question => {
+      debug(question._id.toString(), questionId);
       return question._id.toString() === questionId;
     });
     let isCorrect = question.correctAnswer === answerId;
@@ -96,6 +89,8 @@ class Match {
       socket.emit('gameOver', {
         scores: this.scores
       });
+
+      socket.removeAllListeners('answer');
     });
   }
 
@@ -104,6 +99,20 @@ class Match {
     _.forEach(this.sockets, socket => {
       socket.emit('startGame', {
         questions: this.questions
+      });
+    });
+
+    _.forEach(this.sockets, socket => {
+      debug('socket token', socket.decoded_token);
+      socket.on('answer', data => {
+        // FIXME: this is a hack because currently remove socket listeners
+        // on an event doesn't work properly
+        try {
+          this.handleUserAnswer(socket, data);
+        } catch(e) {
+          // not implement
+        }
+
       });
     });
   }

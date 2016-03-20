@@ -7,7 +7,6 @@ class OneVsOneComponent {
     this.User = User;
     this.Answer = Answer;
     this.ngAudio = ngAudio;
-    this.answeredQuestions = {};
 
     this.startMatching();
 
@@ -26,6 +25,7 @@ class OneVsOneComponent {
 
   startMatching() {
     this.state = 'matching';
+    this.answeredQuestions = {};
     this.User.get().$promise.then(user => {
       this.socket.emit('startMatching', {
         userId: user._id
@@ -61,6 +61,10 @@ class OneVsOneComponent {
     if (this.audio) {
       this.audio.stop();
     }
+  }
+
+  matchAgain() {
+    this.startMatching();
   }
 
   /**
